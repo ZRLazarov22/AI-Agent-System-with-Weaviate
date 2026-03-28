@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recipe Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="brand">
+          <div class="brand__icon" aria-hidden="true">
+            <!-- simple chef-hat mark -->
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path
+                d="M7.2 10.2C5.4 9.7 4 8.1 4 6.2 4 3.9 5.9 2 8.2 2c1.2 0 2.3.5 3.1 1.3C12.1 2.5 13.2 2 14.4 2 16.7 2 18.6 3.9 18.6 6.2c0 1.9-1.4 3.5-3.2 4v7.8c0 2.2-1.8 4-4 4s-4-1.8-4-4v-7.8z"
+              />
+            </svg>
+          </div>
+          <div class="brand__text">
+            <div class="brand__title">Recipe Chatbot</div>
+            <div class="brand__subtitle">Get personalized recipe recommendations</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="chat">
+        <div class="chat__card" role="region" aria-label="Chat">
+          <div class="chat__messages" id="messages" aria-live="polite">
+            <article class="msg msg--assistant">
+              <div class="msg__bubble">
+                <div class="msg__text">
+                  👋 Hi! I&apos;m your recipe assistant. Tell me what you&apos;re in the mood for, and I&apos;ll suggest some delicious recipes!
+                </div>
+                <div class="msg__meta">01:48 AM</div>
+              </div>
+            </article>
+          </div>
+
+          <form class="chat__composer" id="composer" autocomplete="off">
+            <input
+              class="chat__input"
+              id="messageInput"
+              name="message"
+              type="text"
+              placeholder="What would you like to cook today?"
+              aria-label="Message"
+            />
+            <button class="chat__send" id="sendBtn" type="submit" aria-label="Send">
+              <svg viewBox="0 0 24 24" role="img" focusable="false" aria-hidden="true">
+                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <button class="help" type="button" aria-label="Help">?</button>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
