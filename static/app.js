@@ -6,6 +6,20 @@
 
   if (!composer || !input || !sendBtn || !messages) return;
 
+  const getOrCreateChatId = () => {
+    const existing = sessionStorage.getItem("chat_id");
+    if (existing) return existing;
+
+    const id =
+      (globalThis.crypto && typeof globalThis.crypto.randomUUID === "function"
+        ? globalThis.crypto.randomUUID()
+        : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`);
+    sessionStorage.setItem("chat_id", id);
+    return id;
+  };
+
+  let chatId = getOrCreateChatId();
+
   const pad2 = (n) => String(n).padStart(2, "0");
   const formatTime = (date) => {
     let hours = date.getHours();
@@ -57,11 +71,25 @@
       const res = await fetch("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, chat_id: chatId }),
       });
 
-      if (!res.ok) return;
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        appendMessage({
+          role: "assistant",
+          text: data?.details || data?.error || "Something went wrong.",
+          time: formatTime(new Date()),
+        });
+        return;
+      }
+
+      if (data?.chat_id) {
+        chatId = data.chat_id;
+        sessionStorage.setItem("chat_id", chatId);
+      }
+
       if (!data || !data.reply) return;
 
       appendMessage({
