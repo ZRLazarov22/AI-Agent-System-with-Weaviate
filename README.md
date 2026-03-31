@@ -1,4 +1,4 @@
-# Cooking Assistant Backend
+# Cooking Assistant
 
 ## Overview
 

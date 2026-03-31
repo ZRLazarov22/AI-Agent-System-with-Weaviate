@@ -1,0 +1,5 @@
+flask
+weaviate-client[agents]
+python-dotenv
+pandas
+gunicorn
